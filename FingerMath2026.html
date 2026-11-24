@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finger Math 2026 – Toán Ngón Tay</title>
+<style>
+:root{--bg:#fff8ef;--card:#fff;--ink:#3a2a1a;--pri:#ff7a45;--pri2:#ffb23f;--blue:#3d8bfd;--red:#ef476f;--green:#20b26b;--muted:#9a8670;--line:#f0e2cf}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(90deg,#ff7a45,#ffb23f);color:#fff;padding:10px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 3px 10px #0002}
+.logo{font-size:22px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.logo small{font-weight:500;font-size:13px;opacity:.9}
+nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+nav button,.btn{border:0;border-radius:12px;padding:9px 16px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
+nav button{background:#ffffff30;color:#fff}
+nav button.on{background:#fff;color:var(--pri)}
+.btn{background:var(--pri);color:#fff;box-shadow:0 3px 0 #d65a28}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #d65a28}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:0 3px 0 var(--line);border:1px solid var(--line)}
+.btn.blue{background:var(--blue);box-shadow:0 3px 0 #2563c9}
+.btn.green{background:var(--green);box-shadow:0 3px 0 #13844e}
+main{flex:1;padding:14px;max-width:1400px;width:100%;margin:0 auto}
+.view{display:none}.view.on{display:block}
+footer{text-align:center;padding:8px;color:var(--muted);font-size:13px}
+/* lessons layout */
+.lay{display:grid;grid-template-columns:270px 1fr;gap:14px}
+@media(max-width:900px){.lay{grid-template-columns:1fr}}
+.side{background:var(--card);border-radius:18px;padding:10px;box-shadow:0 2px 10px #0000000d;max-height:calc(100vh - 150px);overflow:auto}
+.side h3{margin:6px 8px 10px;font-size:16px;color:var(--muted)}
+.les{display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;cursor:pointer;margin-bottom:4px;border:2px solid transparent}
+.les:hover{background:#fff3e3}
+.les.on{border-color:var(--pri);background:#fff3e3}
+.les .ic{width:36px;height:36px;border-radius:10px;background:#ffe7cf;display:grid;place-items:center;font-size:19px;flex:none}
+.les .tt{font-size:14px;font-weight:600;line-height:1.25}
+.les .ck{margin-left:auto;color:var(--green);font-weight:800}
+.stage{background:var(--card);border-radius:22px;padding:16px;box-shadow:0 2px 12px #0000000f;position:relative;overflow:hidden}
+.stage .ttl{font-size:20px;font-weight:800;margin:0 0 10px}
+.board{display:grid;grid-template-columns:230px 1fr;gap:14px;align-items:start}
+@media(max-width:700px){.board{grid-template-columns:1fr}}
+.teacher{display:flex;flex-direction:column;align-items:center}
+.teacher svg{width:170px;height:190px}
+.bubble{background:#fff4e6;border:2px solid #ffd3a8;border-radius:16px;padding:12px 14px;font-size:16px;line-height:1.5;min-height:110px;position:relative;width:100%}
+.bubble:before{content:"";position:absolute;top:-12px;left:50%;margin-left:-10px;border:10px solid transparent;border-bottom-color:#ffd3a8;border-top:0}
+.tname{font-weight:700;color:var(--pri);font-size:14px;margin:4px 0 8px}
+.mouth{transform-box:fill-box;transform-origin:50% 50%}
+.talking .mouth{animation:talk .22s infinite alternate}
+.actor{text-align:center;border-radius:16px;padding:2px 4px;border:3px solid transparent;transition:.25s}
+.actor.speak{border-color:#ffd166;background:#fffbe9}
+.actor .an{font-weight:700;font-size:13px}
+.kids{display:flex;gap:10px;justify-content:center;margin:4px 0 10px}
+.kids svg{width:78px;height:84px}
+.bubble b.who{display:block;font-size:13px;margin-bottom:2px}
+.bubble.co{background:#fff4e6;border-color:#ffd3a8}.bubble.bin{background:#eaf7ef;border-color:#9fdcb7}.bubble.na{background:#fdeef5;border-color:#f5b5d0}
+.bubble.bin:before{border-bottom-color:#9fdcb7}.bubble.na:before{border-bottom-color:#f5b5d0}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin-top:12px}
+.vcard{background:#fff;border-radius:20px;padding:16px;box-shadow:0 2px 12px #0000000f;border-top:6px solid var(--c)}
+.vcard .hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.vcard .hd svg{width:64px;height:70px}
+.vcard .hd b{font-size:18px;color:var(--c)}
+.vcard label{display:block;font-size:14px;color:var(--muted);margin:8px 0 3px}
+.vcard select{width:100%;padding:8px;border-radius:10px;border:2px solid var(--line);font-family:inherit;font-size:14px}
+.vcard input[type=range]{width:100%}
+.vinfo{background:#fff;border-radius:16px;padding:14px 18px;box-shadow:0 2px 12px #0000000f;line-height:1.6}
+@keyframes talk{from{transform:scaleY(.3)}to{transform:scaleY(1.25)}}
+.talking .tbody{animation:bob 1.2s infinite ease-in-out}
+@keyframes bob{50%{transform:translateY(-2px)}}
+.blink{animation:blink 4s infinite}
+@keyframes blink{0%,95%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.blink{transform-box:fill-box;transform-origin:center}
+.eq{text-align:center;font-size:44px;font-weight:900;color:var(--ink);min-height:62px;margin:2px 0 6px;letter-spacing:1px}
+.eq.pop{animation:eqp .5s}
+@keyframes eqp{0%{transform:scale(.7);opacity:.2}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.hands{display:flex;justify-content:center;gap:56px;flex-wrap:wrap}
+.hbox{text-align:center;border-radius:20px;padding:6px 6px 2px;transition:.3s;border:3px solid transparent}
+.hbox.hl{border-color:#ffd166;background:#fffbe9;box-shadow:0 0 0 6px #ffd16633}
+.hbox .cap{font-weight:700;font-size:15px}
+.hbox .cap.l{color:var(--red)}.hbox .cap.r{color:var(--blue)}
+.hbox .val{font-size:26px;font-weight:900}
+svg.hand{width:220px;height:280px;overflow:visible;margin-top:22px}
+@media(max-width:560px){svg.hand{width:150px;height:190px}.eq{font-size:30px}}
+.palm{fill:#f8cfa6;stroke:#c98a55;stroke-width:3}
+.wrist{fill:#f1c094;stroke:#c98a55;stroke-width:3}
+.fr{fill:#ffd2a6;stroke:#c98a55;stroke-width:3}
+.nail{fill:#fff1e4;stroke:#e3b48a;stroke-width:1.5}
+.fg{transform-box:fill-box;transform-origin:50% 100%;transition:transform .45s cubic-bezier(.5,1.6,.5,1)}
+.fg.down{transform:scaleY(.3)}
+.fg.down .fr{fill:#e9c3a0}
+.fg.down .nail{opacity:0}
+.fg.pop .fr{animation:glow .7s}
+@keyframes glow{0%{fill:#fff27a}100%{}}
+.lab{font-weight:800;font-size:17px;text-anchor:middle;dominant-baseline:middle;transition:opacity .3s;pointer-events:none}
+.lab circle{transition:.3s}
+.labg{transition:opacity .3s}
+.labg.off{opacity:0}
+.lab-r{fill:#fff}.bad-r{fill:var(--blue)}.bad-l{fill:var(--red)}
+.click .fg{cursor:pointer}
+.click .fg:hover .fr{stroke:#ff7a45}
+.ctrl{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:10px}
+.ctrl .btn{min-width:46px;font-size:18px;padding:9px 14px}
+.prog{height:8px;background:#f3e6d6;border-radius:6px;overflow:hidden;margin-top:12px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,#ffb23f,#ff7a45);width:0;transition:.4s}
+.stepn{font-size:13px;color:var(--muted);text-align:center;margin-top:4px}
+.opts{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-top:8px}
+.opts select,.opts input{font-family:inherit}
+.sub{text-align:center;color:var(--muted);font-size:15px;min-height:20px}
+.warn{background:#fff0f0;border:1px solid #ffc9c9;color:#b33;border-radius:10px;padding:8px 12px;font-size:13px;margin-bottom:10px;display:none}
+/* practice */
+.ptabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ptabs button{background:#fff;border:2px solid var(--line);color:var(--ink)}
+.ptabs button.on{border-color:var(--pri);color:var(--pri)}
+.pcard{background:var(--card);border-radius:22px;padding:18px;box-shadow:0 2px 12px #0000000f}
+.score{display:flex;gap:18px;justify-content:center;font-weight:700;margin-bottom:6px;flex-wrap:wrap}
+.score span b{color:var(--pri);font-size:20px}
+.q{text-align:center;font-size:40px;font-weight:900;margin:6px 0}
+.choices{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.choices button{font-size:26px;font-weight:800;min-width:90px;padding:12px;border-radius:16px;border:3px solid var(--line);background:#fff;cursor:pointer;font-family:inherit}
+.choices button.ok{background:#d9f7e7;border-color:var(--green)}
+.choices button.no{background:#ffe1e7;border-color:var(--red)}
+.ans{font-size:28px;width:130px;text-align:center;border:3px solid var(--line);border-radius:14px;padding:8px;font-weight:800;font-family:inherit}
+.fb{text-align:center;font-size:20px;font-weight:800;min-height:30px;margin:8px 0}
+.fb.ok{color:var(--green)}.fb.no{color:var(--red)}
+.row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:8px 0}
+.guide{background:#fff;border-radius:22px;padding:22px;box-shadow:0 2px 12px #0000000f;line-height:1.65;font-size:16px;max-width:950px;margin:auto}
+.guide h2{color:var(--pri);margin-top:0}
+table.t{border-collapse:collapse;margin:10px 0}
+table.t td,table.t th{border:1px solid var(--line);padding:6px 12px;text-align:center}
+table.t th{background:#fff3e3}
+.star{position:absolute;pointer-events:none;font-size:30px;animation:fly 1.2s forwards}
+@keyframes fly{to{transform:translate(var(--dx),-180px) rotate(200deg);opacity:0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🖐️ FINGER MATH 2026 <small>Toán ngón tay – tính nhẩm siêu tốc</small></div>
+  <nav>
+    <button data-v="vLessons" class="on">📚 Bài giảng</button>
+    <button data-v="vPractice">🎯 Luyện tập</button>
+    <button data-v="vVoice">🎙️ Giọng nói</button>
+    <button data-v="vGuide">📖 Hướng dẫn</button>
+  </nav>
+</header>
+
+<main>
+<!-- ===== BÀI GIẢNG ===== -->
+<section id="vLessons" class="view on">
+  <div class="warn" id="voiceWarn">⚠️ Máy tính chưa có giọng đọc tiếng Việt nên âm thanh có thể đọc sai. Trên Windows: Cài đặt → Thời gian & Ngôn ngữ → Giọng nói → Thêm giọng "Tiếng Việt (Microsoft An)". Lời giảng vẫn hiện đầy đủ bằng chữ.</div>
+  <div class="lay">
+    <aside class="side">
+      <h3>GIÁO TRÌNH</h3>
+      <div id="lesList"></div>
+    </aside>
+    <div class="stage" id="stage">
+      <h2 class="ttl" id="lesTitle"></h2>
+      <div class="board">
+        <div class="teacher" id="teacher">
+          <div class="actor" id="act_co"><svg viewBox="0 0 170 190" id="teacherSvg">
+            <g class="tbody">
+              <path d="M30 190 Q30 128 85 122 Q140 128 140 190Z" fill="#4f9df7"/>
+              <path d="M70 124 L85 150 L100 124Z" fill="#fff"/>
+              <path d="M85 150 L78 190 M85 150 L92 190" stroke="#2f77c9" stroke-width="2"/>
+              <rect x="74" y="104" width="22" height="24" rx="8" fill="#f6c69c"/>
+              <path d="M36 70 Q30 18 85 14 Q140 18 134 70 Q140 120 118 128 L52 128 Q30 120 36 70Z" fill="#3b2416"/>
+              <ellipse cx="85" cy="70" rx="40" ry="46" fill="#f8d2ac"/>
+              <path d="M45 58 Q55 22 92 26 Q120 28 126 60 Q104 40 76 44 Q58 46 45 58Z" fill="#3b2416"/>
+              <ellipse cx="44" cy="74" rx="6" ry="9" fill="#f1bf92"/><ellipse cx="126" cy="74" rx="6" ry="9" fill="#f1bf92"/>
+              <circle cx="44" cy="84" r="3" fill="#ffd166"/><circle cx="126" cy="84" r="3" fill="#ffd166"/>
+              <g class="blink"><ellipse cx="70" cy="70" rx="5" ry="6" fill="#2a1a10"/><ellipse cx="100" cy="70" rx="5" ry="6" fill="#2a1a10"/></g>
+              <circle cx="71.5" cy="68" r="1.6" fill="#fff"/><circle cx="101.5" cy="68" r="1.6" fill="#fff"/>
+              <path d="M60 58 Q70 53 79 57 M91 57 Q100 53 110 58" stroke="#3b2416" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <circle cx="60" cy="88" r="7" fill="#ff9aa2" opacity=".5"/><circle cx="110" cy="88" r="7" fill="#ff9aa2" opacity=".5"/>
+              <path d="M85 74 Q82 84 86 86" stroke="#d99b6c" stroke-width="2" fill="none"/>
+              <ellipse class="mouth" cx="85" cy="98" rx="9" ry="5" fill="#c4384f"/>
+              <path d="M58 70 h24 M88 70 h24" stroke="#5b3a22" stroke-width="2" opacity=".0"/>
+            </g>
+          </svg>
+          <div class="tname">👩‍🏫 Cô Mai</div></div>
+          <div class="kids"><div class="actor" id="act_bin"></div><div class="actor" id="act_na"></div></div>
+          <div class="bubble co" id="bubble">Chọn một bài học bên trái rồi bấm ▶ để nghe cô giảng nhé!</div>
+        </div>
+        <div>
+          <div class="eq" id="eq">🖐️</div>
+          <div class="sub" id="sub"></div>
+          <div class="hands">
+            <div class="hbox" id="boxL"><div class="cap l">TAY TRÁI · hàng chục</div><div id="hL"></div><div class="val" id="vL"></div></div>
+            <div class="hbox" id="boxR"><div class="cap r">TAY PHẢI · hàng đơn vị</div><div id="hR"></div><div class="val" id="vR"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="prog"><i id="progBar"></i></div>
+      <div class="stepn" id="stepN"></div>
+      <div class="ctrl">
+        <button class="btn ghost" id="bFirst" title="Về đầu">⏮</button>
+        <button class="btn ghost" id="bPrev" title="Bước trước (←)">◀</button>
+        <button class="btn" id="bPlay" title="Phát / Dừng (Space)" style="min-width:110px">▶ Phát</button>
+        <button class="btn ghost" id="bNext" title="Bước sau (→)">▶▶</button>
+        <button class="btn ghost" id="bRep" title="Nghe lại">🔁</button>
+      </div>
+      <div class="opts">
+        <label><input type="checkbox" id="optSound" checked> 🔊 Đọc thành tiếng</label>
+        <label><input type="checkbox" id="optAuto" checked> Tự chuyển bước</label>
+        <label>Tốc độ đọc <select id="optRate"><option value="0.8">Chậm</option><option value="1" selected>Vừa</option><option value="1.2">Nhanh</option></select></label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LUYỆN TẬP ===== -->
+<section id="vPractice" class="view">
+  <div class="ptabs">
+    <button class="btn on" data-p="build">✋ Bày số bằng tay</button>
+    <button class="btn" data-p="read">👀 Đọc số trên tay</button>
+    <button class="btn" data-p="calc">➕ Tính nhẩm</button>
+    <button class="btn" data-p="mul9">✖️ Nhân 9</button>
+  </div>
+  <div class="pcard" id="pcard">
+    <div class="score"><span>Điểm: <b id="sc">0</b></span><span>Chuỗi đúng: <b id="st">0</b></span><span>Tổng điểm tích lũy: <b id="tot">0</b></span></div>
+    <div class="row" id="pLevel">
+      Mức độ:
+      <select id="lvl"><option value="1">Dễ (0–9)</option><option value="2" selected>Vừa (0–50)</option><option value="3">Khó (0–99)</option></select>
+      <label style="font-size:14px;color:var(--muted)"><input type="checkbox" id="showVal"> Hiện giá trị ngón tay</label>
+    </div>
+    <div class="q" id="pq"></div>
+    <div class="sub" id="psub"></div>
+    <div class="hands">
+      <div class="hbox"><div class="cap l" id="pcapL">TAY TRÁI · hàng chục</div><div id="pL"></div><div class="val" id="pvL"></div></div>
+      <div class="hbox"><div class="cap r" id="pcapR">TAY PHẢI · hàng đơn vị</div><div id="pR"></div><div class="val" id="pvR"></div></div>
+    </div>
+    <div class="choices" id="pch"></div>
+    <div class="row" id="pinput"></div>
+    <div class="fb" id="pfb"></div>
+    <div class="row" id="pbtns"></div>
+  </div>
+</section>
+
+<!-- ===== GIỌNG NÓI ===== -->
+<section id="vVoice" class="view">
+  <div class="vinfo" id="vInfo"></div>
+  <div class="vgrid" id="vGrid"></div>
+  <div class="row" style="margin-top:16px">
+    <button class="btn green" id="bDemo">▶ Nghe thử hội thoại</button>
+    <button class="btn ghost" id="bVReset">↺ Tự chọn lại giọng mặc định</button>
+    <button class="btn ghost" id="bVStop">⏹ Dừng</button>
+  </div>
+</section>
+
+<!-- ===== HƯỚNG DẪN ===== -->
+<section id="vGuide" class="view">
+  <div class="guide">
+    <h2>📖 Phương pháp Finger Math là gì?</h2>
+    <p>Finger Math (Chisanbop) dùng <b>10 ngón tay như một bàn tính</b>. Học sinh tính cộng, trừ, nhân rất nhanh mà không cần giấy bút, sau một thời gian sẽ tự “thấy” bàn tay trong đầu để tính nhẩm.</p>
+    <table class="t">
+      <tr><th></th><th>Ngón cái</th><th>Mỗi ngón trỏ, giữa, áp út, út</th></tr>
+      <tr><td style="color:var(--blue);font-weight:700">Tay phải (đơn vị)</td><td>5</td><td>1</td></tr>
+      <tr><td style="color:var(--red);font-weight:700">Tay trái (chục)</td><td>50</td><td>10</td></tr>
+    </table>
+    <h3>🤝 Bạn của 5 (bạn nhỏ)</h3>
+    <p>1 + 4 = 5, 2 + 3 = 5. &nbsp; <b>+4 = +5 − 1</b>, <b>+3 = +5 − 2</b>, <b>−4 = −5 + 1</b>…</p>
+    <h3>🤝 Bạn của 10 (bạn lớn)</h3>
+    <p>1+9, 2+8, 3+7, 4+6, 5+5. &nbsp; <b>+9 = +10 − 1</b> (giơ 1 ngón tay trái, co 1 ngón tay phải), <b>−8 = −10 + 2</b>…</p>
+    <h3>🎓 Cách học hiệu quả</h3>
+    <ol>
+      <li>Vào mục <b>🎙️ Giọng nói</b> để chọn giọng riêng cho Cô Mai, bạn Bin và bạn Na.</li>
+      <li>Học lần lượt từ Bài 1, bấm <b>▶ Phát</b> để cô giáo giảng, vừa nghe vừa làm theo bằng tay thật.</li>
+      <li>Phím tắt: <b>Space</b> phát/dừng, <b>←</b> <b>→</b> chuyển bước.</li>
+      <li>Sang <b>Luyện tập</b>: bấm vào ngón tay trên màn hình để co/giơ ngón.</li>
+      <li>Mỗi ngày 15 phút, sau 2–3 tuần các em sẽ tính nhẩm trong đầu được.</li>
+    </ol>
+    <h3>🔊 Âm thanh</h3>
+    <p>Phần mềm dùng giọng đọc tiếng Việt có sẵn trong máy. Nếu không nghe thấy hoặc đọc sai, hãy cài giọng “Tiếng Việt” trong Cài đặt Windows (Giọng nói).</p>
+  </div>
+</section>
+</main>
+<footer>© 2026 Bản quyền thuộc về <b>HOÀNG THÂN THIỆN</b> · Finger Math 2026</footer>
+
+<script>
+/* ================= HAND DRAWING ================= */
+// geometry for RIGHT hand (index 0 = thumb, 1 index, 2 middle, 3 ring, 4 pinky)
+const W=200;
+const GEO_R=[
+  {x:24,y:116,w:30,h:72,rot:-28,ox:54,oy:198},
+  {x:58,y:32,w:27,h:92},
+  {x:88,y:18,w:27,h:106},
+  {x:118,y:28,w:27,h:96},
+  {x:148,y:56,w:24,h:68}
+];
+const GEO_L=GEO_R.map(g=>({x:W-g.x-g.w,y:g.y,w:g.w,h:g.h,rot:g.rot?-g.rot:0,ox:g.ox?W-g.ox:0,oy:g.oy}));
+function handSVG(side,id,clickable){
+  const G=side==='L'?GEO_L:GEO_R, badge=side==='L'?'bad-l':'bad-r';
+  let s=`<svg viewBox="0 0 ${W} 260" class="hand${clickable?' click':''}" id="${id}">`;
+  s+=`<rect class="wrist" x="${side==='L'?50:62}" y="206" width="88" height="50" rx="14"/>`;
+  G.forEach((f,i)=>{
+    const open=f.rot?`<g transform="rotate(${f.rot} ${f.ox} ${f.oy})">`:'<g>';
+    s+=open+`<g class="fg" data-i="${i}"><rect class="fr" x="${f.x}" y="${f.y}" width="${f.w}" height="${f.h}" rx="13"/>`+
+      `<rect class="nail" x="${f.x+5}" y="${f.y+5}" width="${f.w-10}" height="16" rx="7"/></g>`;
+    s+=`<g class="labg" data-l="${i}"><circle class="${badge}" cx="${f.x+f.w/2}" cy="${f.y-16}" r="15"/><text class="lab lab-r" x="${f.x+f.w/2}" y="${f.y-15}"></text></g></g>`;
+  });
+  s+=`<rect class="palm" x="${side==='L'?32:44}" y="112" width="124" height="118" rx="38"/>`;
+  s+=`<path d="M${side==='L'?70:82} 170 q30 12 60 0" stroke="#d9a074" stroke-width="2.5" fill="none"/>`;
+  s+='</svg>';
+  return s;
+}
+const digitArr=d=>[d>=5,d%5>=1,d%5>=2,d%5>=3,d%5>=4];
+const arrDigit=a=>(a[0]?5:0)+(a[1]?1:0)+(a[2]?1:0)+(a[3]?1:0)+(a[4]?1:0);
+const LAB_CS={L:['50','10','10','10','10'],R:['5','1','1','1','1']};
+function setHand(id,arr,labels,always){
+  const svg=document.getElementById(id); if(!svg)return;
+  svg.querySelectorAll('.fg').forEach(g=>{
+    const i=+g.dataset.i, up=!!arr[i], wasUp=!g.classList.contains('down');
+    g.classList.toggle('down',!up);
+    if(up!==wasUp){g.classList.remove('pop');g.getBoundingClientRect();g.classList.add('pop');}
+  });
+  svg.querySelectorAll('.labg').forEach(g=>{
+    const i=+g.dataset.l;
+    g.querySelector('text').textContent=labels[i];
+    const fs=labels[i].length>=2?14:17; g.querySelector('text').style.fontSize=fs+'px';
+    g.classList.toggle('off',!(always||arr[i]));
+  });
+}
+function readHand(id){return [...document.getElementById(id).querySelectorAll('.fg')].map(g=>!g.classList.contains('down'));}
+const toArr=v=>Array.isArray(v)?v.map(Boolean):digitArr(v);
+// 9-times table: fingers 1..10 from left pinky to right pinky
+const nine=n=>({L:[n!==5,n!==4,n!==3,n!==2,n!==1],R:[n!==6,n!==7,n!==8,n!==9,n!==10]});
+const LAB_9={L:['5','4','3','2','1'],R:['6','7','8','9','10']};
+// 6..10 multiplication: raise (a-5) fingers starting from pinky
+const mulH=a=>{const k=a-5;return [k>=5,k>=4,k>=3,k>=2,k>=1]};
+const LAB_MUL={L:['10','9','8','7','6'],R:['10','9','8','7','6']};
+const ALL=[1,1,1,1,1];
+
+/* ================= LESSON DATA ================= */
+// step: [lời giảng, tay trái, tay phải, phép tính lớn, chú thích, tay được tô sáng]
+const LESSONS=[
+{t:'Bài 1. Làm quen – Tay phải hàng đơn vị',ic:'✋',steps:[
+ ['Chào các em! Cô là cô Mai. Hôm nay cô sẽ dạy các em phương pháp Finger Math, tính nhẩm siêu nhanh chỉ bằng đôi bàn tay.',0,0,'Finger Math 👋',''],
+ ['@bin Thưa cô, chỉ dùng ngón tay mà tính nhanh được ạ?',0,0,'Finger Math 👋',''],
+ ['@na Bin ơi, mình nghe nói luyện giỏi rồi còn tính nhẩm trong đầu được đó!',0,0,'Finger Math 👋',''],
+ ['Đúng rồi Na! Bây giờ cả lớp cùng bắt đầu nhé.',0,0,'Finger Math 👋',''],
+ ['Các em đặt hai bàn tay lên bàn, mu bàn tay hướng lên trên. Khi tất cả các ngón đều co lại, đó là số không.',0,0,'0','Tất cả ngón co lại = 0'],
+ ['Tay phải là hàng đơn vị. Bốn ngón trỏ, giữa, áp út và út, mỗi ngón có giá trị bằng một.',0,[0,1,1,1,1],'Mỗi ngón = 1','Ngón trỏ · giữa · áp út · út','R'],
+ ['Riêng ngón cái của tay phải có giá trị bằng năm.',0,[1,0,0,0,0],'Ngón cái = 5','','R'],
+ ['Bây giờ chúng ta cùng đếm nhé. Giơ ngón trỏ lên: số một.',0,1,'1','','R'],
+ ['Giơ thêm ngón giữa: số hai.',0,2,'2','','R'],
+ ['Giơ thêm ngón áp út: số ba.',0,3,'3','','R'],
+ ['Giơ thêm ngón út: số bốn.',0,4,'4','','R'],
+ ['Số năm: ta co cả bốn ngón lại và chỉ giơ ngón cái, vì ngón cái bằng năm.',0,5,'5','Ngón cái = 5','R'],
+ ['@bin Ơ, sao số năm lại chỉ giơ mỗi ngón cái ạ?',0,5,'5',''],
+ ['Vì ngón cái tay phải có giá trị bằng năm. Em nhớ kỹ nhé!',0,5,'Ngón cái = 5','','R'],
+ ['Số sáu bằng năm cộng một: giơ ngón cái và ngón trỏ.',0,6,'6 = 5 + 1','','R'],
+ ['Số bảy bằng năm cộng hai.',0,7,'7 = 5 + 2','','R'],
+ ['Số tám bằng năm cộng ba.',0,8,'8 = 5 + 3','','R'],
+ ['Số chín bằng năm cộng bốn: giơ cả năm ngón của tay phải.',0,9,'9 = 5 + 4','','R'],
+ ['Tuyệt vời! Các em đã biết biểu diễn các số từ không đến chín bằng tay phải. Hãy tự làm lại nhiều lần bằng tay thật nhé!',0,9,'0 → 9 ⭐','']
+]},
+{t:'Bài 2. Tay trái hàng chục (10 – 99)',ic:'🤚',steps:[
+ ['Tay trái là hàng chục. Mỗi ngón trỏ, giữa, áp út và út của tay trái có giá trị bằng mười.',[0,1,1,1,1],0,'Mỗi ngón = 10','','L'],
+ ['Ngón cái của tay trái có giá trị bằng năm mươi.',[1,0,0,0,0],0,'Ngón cái = 50','','L'],
+ ['Số mười: tay trái giơ ngón trỏ, tay phải co hết.',1,0,'10','','L'],
+ ['Số hai mươi: tay trái giơ hai ngón.',2,0,'20','','L'],
+ ['Số năm mươi: tay trái chỉ giơ ngón cái.',5,0,'50','','L'],
+ ['Số bảy mươi: ngón cái là năm mươi, cộng thêm hai ngón là hai mươi.',7,0,'70 = 50 + 20','','L'],
+ ['Bây giờ ghép hai tay. Số hai mươi ba: tay trái giơ hai ngón là hai mươi, tay phải giơ ba ngón là ba.',2,3,'23 = 20 + 3',''],
+ ['Số bốn mươi bảy: tay trái bốn ngón là bốn mươi, tay phải ngón cái và hai ngón là bảy.',4,7,'47 = 40 + 7',''],
+ ['Số sáu mươi tám: tay trái là sáu mươi, tay phải là tám.',6,8,'68 = 60 + 8',''],
+ ['Số chín mươi chín: giơ tất cả mười ngón tay. Đây là số lớn nhất ta bày được bằng hai bàn tay.',9,9,'99',''],
+ ['Mẹo nhớ: đọc tay trái trước là hàng chục, đọc tay phải sau là hàng đơn vị.',3,5,'35 = 30 + 5',''],
+ ['@na Thưa cô, đây là số ba mươi lăm: tay trái ba ngón, tay phải ngón cái đúng không ạ?',3,5,'35 = 30 + 5',''],
+ ['Chính xác! Na giỏi lắm. Các em sang phần Luyện tập để thử nhé!',3,5,'35 ✔','']
+]},
+{t:'Bài 3. Phép cộng đơn giản',ic:'➕',steps:[
+ ['Phép cộng đơn giản: khi còn đủ ngón tay, ta chỉ việc giơ thêm ngón.',0,0,'a + b',''],
+ ['Ví dụ một: một cộng ba. Đầu tiên ta bày số một.',0,1,'1 + 3 = ?','','R'],
+ ['Giơ thêm ba ngón nữa, ta được bốn. Vậy một cộng ba bằng bốn.',0,4,'1 + 3 = 4','','R'],
+ ['Ví dụ hai: năm cộng ba. Giơ ngón cái là năm.',0,5,'5 + 3 = ?','','R'],
+ ['Giơ thêm ba ngón nhỏ: năm cộng ba là tám.',0,8,'5 + 3 = 8','','R'],
+ ['Cộng năm thì chỉ cần giơ ngón cái. Ví dụ hai cộng năm, bày số hai.',0,2,'2 + 5 = ?','','R'],
+ ['Giơ ngón cái lên, ta được bảy.',0,7,'2 + 5 = 7','','R'],
+ ['Cộng số có hai chữ số: mười một cộng ba mươi hai. Bày số mười một.',1,1,'11 + 32 = ?',''],
+ ['Cộng hàng chục trước: tay trái giơ thêm ba ngón, được bốn mươi mốt.',4,1,'11 + 30 = 41','','L'],
+ ['Rồi cộng hàng đơn vị: tay phải giơ thêm hai ngón, được bốn mươi ba.',4,3,'41 + 2 = 43','','R'],
+ ['Vậy mười một cộng ba mươi hai bằng bốn mươi ba. Rất dễ phải không nào!',4,3,'11 + 32 = 43 ✔','']
+]},
+{t:'Bài 4. Cộng với “Bạn của 5”',ic:'🤝',steps:[
+ ['Khi không đủ ngón để giơ thêm, ta nhờ bạn của năm. Một và bốn là bạn, hai và ba là bạn, vì cộng lại bằng năm.',0,0,'1 + 4 = 5 · 2 + 3 = 5',''],
+ ['Quy tắc: cộng bốn bằng cộng năm trừ một. Cộng ba bằng cộng năm trừ hai.',0,0,'+4 = +5 − 1','+3 = +5 − 2 · +2 = +5 − 3 · +1 = +5 − 4'],
+ ['Ví dụ: ba cộng bốn. Bày số ba, tay phải đang giơ ba ngón.',0,3,'3 + 4 = ?','','R'],
+ ['Chỉ còn một ngón trống, không đủ bốn. Cộng bốn là cộng năm trừ một. Đầu tiên giơ ngón cái để cộng năm.',0,8,'3 + 5 = 8','Bước 1: giơ ngón cái (+5)','R'],
+ ['Sau đó co một ngón để trừ một. Ta được bảy. Vậy ba cộng bốn bằng bảy.',0,7,'3 + 4 = 7','Bước 2: co 1 ngón (−1)','R'],
+ ['@bin Con hiểu rồi! Không đủ ngón thì giơ ngón cái rồi co bớt ngón ạ.',0,7,'3 + 4 = 7',''],
+ ['Ví dụ: bốn cộng hai. Bày số bốn.',0,4,'4 + 2 = ?','','R'],
+ ['Cộng hai bằng cộng năm trừ ba. Giơ ngón cái: được chín.',0,9,'4 + 5 = 9','Bước 1: +5','R'],
+ ['Co ba ngón: còn sáu. Vậy bốn cộng hai bằng sáu.',0,6,'4 + 2 = 6','Bước 2: −3','R'],
+ ['Ví dụ: hai cộng ba. Bày số hai.',0,2,'2 + 3 = ?','','R'],
+ ['Cộng ba bằng cộng năm trừ hai. Giơ ngón cái: được bảy.',0,7,'2 + 5 = 7','Bước 1: +5','R'],
+ ['Co hai ngón: được năm. Vậy hai cộng ba bằng năm.',0,5,'2 + 3 = 5','Bước 2: −2','R'],
+ ['Nhớ nhé: không đủ ngón thì giơ ngón cái, rồi co bớt số ngón là bạn của số cần cộng.',0,5,'⭐ Bạn của 5 ⭐','']
+]},
+{t:'Bài 5. Cộng có nhớ – “Bạn của 10”',ic:'🔟',steps:[
+ ['Khi tay phải không đủ để cộng, ta nhờ bạn của mười. Một và chín, hai và tám, ba và bảy, bốn và sáu, năm và năm là bạn của mười.',0,0,'1+9 · 2+8 · 3+7 · 4+6 · 5+5',''],
+ ['Quy tắc: cộng chín bằng cộng mười trừ một. Cộng tám bằng cộng mười trừ hai. Cộng bảy bằng cộng mười trừ ba.',0,0,'+9 = +10 − 1','+8 = +10 − 2 · +7 = +10 − 3 · +6 = +10 − 4'],
+ ['Cộng mười chính là giơ thêm một ngón ở tay trái.',1,0,'+10 = 1 ngón tay trái','','L'],
+ ['Ví dụ: bảy cộng năm. Bày số bảy.',0,7,'7 + 5 = ?','','R'],
+ ['Cộng năm bằng cộng mười trừ năm. Tay trái giơ một ngón để cộng mười.',1,7,'7 + 10 = 17','Bước 1: +10','L'],
+ ['Tay phải co ngón cái để trừ năm, còn hai. Kết quả là mười hai.',1,2,'7 + 5 = 12','Bước 2: −5','R'],
+ ['@na Cô ơi, vậy cộng chín thì giơ một ngón tay trái, co một ngón tay phải phải không ạ?',1,2,'+9 = +10 − 1',''],
+ ['Đúng vậy Na! Vì chín và một là bạn của mười.',1,2,'+9 = +10 − 1',''],
+ ['Ví dụ: tám cộng sáu. Bày số tám.',0,8,'8 + 6 = ?','','R'],
+ ['Cộng sáu bằng cộng mười trừ bốn. Tay trái giơ một ngón.',1,8,'8 + 10 = 18','Bước 1: +10','L'],
+ ['Tay phải trừ bốn: tám trừ bốn còn bốn. Kết quả mười bốn.',1,4,'8 + 6 = 14','Bước 2: −4','R'],
+ ['Ví dụ: hai mươi chín cộng tám. Bày số hai mươi chín.',2,9,'29 + 8 = ?',''],
+ ['Cộng tám bằng cộng mười trừ hai. Tay trái giơ thêm một ngón, được ba mươi chín.',3,9,'29 + 10 = 39','Bước 1: +10','L'],
+ ['Tay phải co hai ngón: chín trừ hai bằng bảy. Kết quả ba mươi bảy.',3,7,'29 + 8 = 37','Bước 2: −2','R'],
+ ['Giỏi lắm! Các em đã biết cộng có nhớ bằng bạn của mười.',3,7,'⭐ Bạn của 10 ⭐','']
+]},
+{t:'Bài 6. Phép trừ',ic:'➖',steps:[
+ ['Phép trừ ngược lại với phép cộng: ta co bớt ngón tay xuống.',0,0,'a − b',''],
+ ['Ví dụ: tám trừ ba. Bày số tám.',0,8,'8 − 3 = ?','','R'],
+ ['Co ba ngón nhỏ xuống, còn lại ngón cái là năm.',0,5,'8 − 3 = 5','','R'],
+ ['Trừ năm thì chỉ cần co ngón cái. Ví dụ chín trừ năm, bày số chín.',0,9,'9 − 5 = ?','','R'],
+ ['Co ngón cái xuống, còn bốn.',0,4,'9 − 5 = 4','','R'],
+ ['Khi không đủ ngón nhỏ để co, ta dùng bạn của năm: trừ bốn bằng trừ năm cộng một, trừ ba bằng trừ năm cộng hai.',0,0,'−4 = −5 + 1','−3 = −5 + 2 · −2 = −5 + 3'],
+ ['Ví dụ: sáu trừ ba. Bày số sáu: ngón cái và một ngón.',0,6,'6 − 3 = ?','','R'],
+ ['Chỉ có một ngón nhỏ, không co được ba. Trừ ba bằng trừ năm cộng hai. Co ngón cái: còn một.',0,1,'6 − 5 = 1','Bước 1: −5','R'],
+ ['Giơ thêm hai ngón: được ba. Vậy sáu trừ ba bằng ba.',0,3,'6 − 3 = 3','Bước 2: +2','R'],
+ ['Trừ số có hai chữ số: bốn mươi tám trừ hai mươi ba. Bày số bốn mươi tám.',4,8,'48 − 23 = ?',''],
+ ['Tay trái co hai ngón: còn hai mươi tám.',2,8,'48 − 20 = 28','','L'],
+ ['Tay phải co ba ngón: còn hai mươi lăm. Vậy bốn mươi tám trừ hai mươi ba bằng hai mươi lăm.',2,5,'48 − 23 = 25','','R']
+]},
+{t:'Bài 7. Trừ có mượn',ic:'🔄',steps:[
+ ['Khi tay phải không đủ để trừ, ta mượn một ngón tay trái, tức là mười. Trừ chín bằng trừ mười cộng một. Trừ tám bằng trừ mười cộng hai.',0,0,'−9 = −10 + 1','−8 = −10 + 2 · −7 = −10 + 3 · −6 = −10 + 4'],
+ ['Ví dụ: mười hai trừ năm. Bày số mười hai.',1,2,'12 − 5 = ?',''],
+ ['Tay phải chỉ có hai, không trừ được năm. Trừ năm bằng trừ mười cộng năm. Co một ngón tay trái.',0,2,'12 − 10 = 2','Bước 1: −10','L'],
+ ['Giơ ngón cái tay phải để cộng năm: được bảy.',0,7,'12 − 5 = 7','Bước 2: +5','R'],
+ ['@bin Mượn mười rồi trả lại năm, hay quá cô ơi!',0,7,'12 − 5 = 7',''],
+ ['Ví dụ: hai mươi ba trừ sáu. Bày số hai mươi ba.',2,3,'23 − 6 = ?',''],
+ ['Trừ sáu bằng trừ mười cộng bốn. Tay trái co một ngón: còn mười ba.',1,3,'23 − 10 = 13','Bước 1: −10','L'],
+ ['Tay phải cộng bốn: ba cộng bốn bằng bảy. Kết quả mười bảy.',1,7,'23 − 6 = 17','Bước 2: +4','R'],
+ ['Ví dụ: ba mươi mốt trừ chín. Bày số ba mươi mốt.',3,1,'31 − 9 = ?',''],
+ ['Trừ chín bằng trừ mười cộng một. Co một ngón tay trái: còn hai mươi mốt.',2,1,'31 − 10 = 21','Bước 1: −10','L'],
+ ['Giơ thêm một ngón tay phải: hai mươi hai. Vậy ba mươi mốt trừ chín bằng hai mươi hai.',2,2,'31 − 9 = 22','Bước 2: +1','R']
+]},
+{t:'Bài 8. Mẹo nhân 9 bằng ngón tay',ic:'9️⃣',mode:'nine',steps:[
+ ['Mẹo nhân chín bằng mười ngón tay! Giơ cả mười ngón, đánh số từ một đến mười, bắt đầu từ ngón út tay trái.',ALL,ALL,'1 → 10','Ngón út trái = 1 … ngón út phải = 10'],
+ ['Muốn tính chín nhân mấy, ta co ngón tay mang số đó xuống.',ALL,ALL,'9 × n → co ngón số n',''],
+ ['Ví dụ chín nhân ba: co ngón số ba.',nine(3).L,nine(3).R,'9 × 3 = ?','Co ngón số 3'],
+ ['Bên trái ngón co có hai ngón: đó là hai chục. Bên phải có bảy ngón: đó là bảy đơn vị. Vậy chín nhân ba bằng hai mươi bảy.',nine(3).L,nine(3).R,'9 × 3 = 27','2 ngón bên trái · 7 ngón bên phải'],
+ ['Chín nhân bảy: co ngón số bảy. Bên trái có sáu ngón, bên phải có ba ngón. Kết quả sáu mươi ba.',nine(7).L,nine(7).R,'9 × 7 = 63','6 ngón | 3 ngón'],
+ ['@bin Con thử chín nhân tám nhé: co ngón số tám, bên trái bảy ngón, bên phải hai ngón, là bảy mươi hai!',nine(8).L,nine(8).R,'9 × 8 = 72','7 ngón | 2 ngón'],
+ ['Bin làm đúng rồi! Cả lớp hoan hô Bin nào.',nine(8).L,nine(8).R,'9 × 8 = 72 ✔',''],
+ ['Chín nhân năm: co ngón cái tay trái. Bên trái bốn ngón, bên phải năm ngón: bốn mươi lăm.',nine(5).L,nine(5).R,'9 × 5 = 45','4 ngón | 5 ngón'],
+ ['Chín nhân chín: co ngón số chín. Bên trái tám ngón, bên phải một ngón: tám mươi mốt.',nine(9).L,nine(9).R,'9 × 9 = 81','8 ngón | 1 ngón'],
+ ['Thật kỳ diệu phải không! Các em vào Luyện tập, chọn Nhân chín để chơi nhé.',ALL,ALL,'⭐ Bảng 9 ⭐','']
+]},
+{t:'Bài 9. Mẹo nhân các số từ 6 đến 10',ic:'✖️',mode:'mul',steps:[
+ ['Mẹo nhân các số từ sáu đến mười. Ở mỗi bàn tay, ngón út là sáu, áp út là bảy, ngón giữa là tám, ngón trỏ là chín, ngón cái là mười.',ALL,ALL,'Út 6 · Áp út 7 · Giữa 8 · Trỏ 9 · Cái 10',''],
+ ['Ví dụ bảy nhân tám. Tay trái giơ từ ngón út đến ngón số bảy: hai ngón. Tay phải giơ từ ngón út đến ngón số tám: ba ngón.',mulH(7),mulH(8),'7 × 8 = ?','Trái: 7 · Phải: 8'],
+ ['Số ngón đang giơ là hàng chục: hai cộng ba bằng năm chục.',mulH(7),mulH(8),'2 + 3 = 5 chục','Ngón giơ → hàng chục'],
+ ['Nhân số ngón đang co: tay trái co ba ngón, tay phải co hai ngón. Ba nhân hai bằng sáu.',mulH(7),mulH(8),'3 × 2 = 6','Ngón co → nhân với nhau'],
+ ['Năm chục cộng sáu bằng năm mươi sáu. Vậy bảy nhân tám bằng năm mươi sáu.',mulH(7),mulH(8),'7 × 8 = 56',''],
+ ['@na Thưa cô, ngón giơ cộng lại, ngón co nhân lại phải không ạ?',mulH(7),mulH(8),'giơ: cộng · co: nhân',''],
+ ['Chính xác! Na nhớ rất nhanh.',mulH(7),mulH(8),'7 × 8 = 56 ✔',''],
+ ['Ví dụ chín nhân tám: tay trái giơ bốn ngón, tay phải giơ ba ngón, được bảy chục. Ngón co: một nhân hai bằng hai. Kết quả bảy mươi hai.',mulH(9),mulH(8),'9 × 8 = 72','70 + 1×2'],
+ ['Ví dụ sáu nhân bảy: giơ một và hai ngón, được ba chục. Ngón co: bốn nhân ba bằng mười hai. Ba mươi cộng mười hai bằng bốn mươi hai.',mulH(6),mulH(7),'6 × 7 = 42','30 + 4×3 = 30 + 12'],
+ ['Chúc mừng các em đã học xong giáo trình Finger Math! Hãy luyện tập mỗi ngày nhé.',ALL,ALL,'🏆 Hoàn thành! 🏆','']
+]}
+];
+
+/* ================= STORAGE ================= */
+const store={get(k,d){try{const v=localStorage.getItem('fm26_'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('fm26_'+k,JSON.stringify(v))}catch(e){}}};
+let done=store.get('done',{});
+
+/* ================= CHARACTERS & SPEECH ================= */
+const KID_SVG={
+ bin:`<svg viewBox="0 0 100 108"><path d="M14 108 Q14 74 50 70 Q86 74 86 108Z" fill="#2fbf71"/><rect x="42" y="58" width="16" height="16" rx="6" fill="#f6c69c"/><circle cx="50" cy="42" r="28" fill="#f8d2ac"/><path d="M22 38 Q22 10 50 12 Q80 10 78 38 Q70 24 56 26 Q44 18 34 28 Q28 26 22 38Z" fill="#2b1a10"/><g class="blink"><ellipse cx="40" cy="44" rx="3.5" ry="4.5" fill="#2a1a10"/><ellipse cx="60" cy="44" rx="3.5" ry="4.5" fill="#2a1a10"/></g><circle cx="33" cy="53" r="5" fill="#ff9aa2" opacity=".45"/><circle cx="67" cy="53" r="5" fill="#ff9aa2" opacity=".45"/><ellipse class="mouth" cx="50" cy="58" rx="6" ry="3.5" fill="#c4384f"/></svg><div class="an" style="color:#20a35f">👦 Bạn Bin</div>`,
+ na:`<svg viewBox="0 0 100 108"><path d="M14 108 Q14 74 50 70 Q86 74 86 108Z" fill="#f472b6"/><rect x="42" y="58" width="16" height="16" rx="6" fill="#f6c69c"/><circle cx="16" cy="40" r="11" fill="#3b2416"/><circle cx="84" cy="40" r="11" fill="#3b2416"/><circle cx="20" cy="30" r="4" fill="#ffd166"/><circle cx="80" cy="30" r="4" fill="#ffd166"/><circle cx="50" cy="42" r="28" fill="#f8d2ac"/><path d="M22 40 Q20 10 50 12 Q80 10 78 40 Q66 22 50 24 Q34 22 22 40Z" fill="#3b2416"/><g class="blink"><ellipse cx="40" cy="44" rx="3.5" ry="4.5" fill="#2a1a10"/><ellipse cx="60" cy="44" rx="3.5" ry="4.5" fill="#2a1a10"/></g><circle cx="33" cy="53" r="5" fill="#ff9aa2" opacity=".5"/><circle cx="67" cy="53" r="5" fill="#ff9aa2" opacity=".5"/><ellipse class="mouth" cx="50" cy="58" rx="6" ry="3.5" fill="#c4384f"/></svg><div class="an" style="color:#db2777">👧 Bạn Na</div>`
+};
+document.getElementById('act_bin').innerHTML=KID_SVG.bin;
+document.getElementById('act_na').innerHTML=KID_SVG.na;
+const ROLES={
+ co:{name:'Cô Mai',desc:'Cô giáo giảng bài & khen thưởng',color:'#ff7a45',dPitch:1,dRate:1},
+ bin:{name:'Bạn Bin',desc:'Học sinh nam – hỏi bài, trả lời',color:'#20a35f',dPitch:1.35,dRate:1.05},
+ na:{name:'Bạn Na',desc:'Học sinh nữ – hỏi bài, trả lời',color:'#db2777',dPitch:1.6,dRate:1.05}
+};
+let vset=store.get('voices',null);
+let voices=[],utter=null,speakTok=0,fallbackTimer=null;
+const isVi=v=>/^vi/i.test(v.lang)||/viet/i.test(v.name);
+const FEM=/hoaimy|hoài my|\ban\b|female|nữ|linh|mai|lan/i, MALE=/namminh|nam minh|male|nam\b|minh|duc|đức/i;
+function defaultVoices(){
+  const vi=voices.filter(isVi);
+  const fem=vi.find(v=>FEM.test(v.name))||vi[0], male=vi.find(v=>MALE.test(v.name)&&!FEM.test(v.name))||vi[0];
+  const id=v=>v?v.voiceURI:'';
+  vset={co:{v:id(fem),p:1,r:1},bin:{v:id(male),p:male&&male!==fem?1.15:1.35,r:1.05},na:{v:id(fem),p:1.55,r:1.05}};
+  store.set('voices',vset);
+}
+function loadVoices(){
+  try{voices=speechSynthesis.getVoices()}catch(e){voices=[]}
+  voices=voices.slice().sort((a,b)=>(isVi(b)-isVi(a))||a.name.localeCompare(b.name));
+  const has=voices.some(isVi);
+  document.getElementById('voiceWarn').style.display=(voices.length&&!has)?'block':'none';
+  if(voices.length&&(!vset||!vset.co))defaultVoices();
+  renderVoiceView();
+}
+if('speechSynthesis' in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;setTimeout(loadVoices,800);}
+function voiceFor(who){const c=(vset&&vset[who])||{};return voices.find(v=>v.voiceURI===c.v)||voices.find(isVi);}
+let talkingEl=null;
+function setTalking(who){
+  document.querySelectorAll('.actor').forEach(a=>{a.classList.remove('talking');});
+  if(who){const el=document.getElementById('act_'+who);if(el)el.classList.add('talking');}
+}
+function stopSpeak(){speakTok++;clearTimeout(fallbackTimer);try{speechSynthesis.cancel()}catch(e){}setTalking(null);}
+function speak(text,onend,force,who){
+  who=who||'co';stopSpeak();const tok=speakTok;
+  const c=(vset&&vset[who])||{p:ROLES[who].dPitch,r:ROLES[who].dRate};
+  const rate=+document.getElementById('optRate').value*(c.r||1);
+  const fin=()=>{if(tok!==speakTok)return;setTalking(null);onend&&onend();};
+  const soundOn=force!==undefined?force:document.getElementById('optSound').checked;
+  setTalking(who);
+  if(!soundOn||!('speechSynthesis' in window)){fallbackTimer=setTimeout(fin,1500+text.length*60/rate);return;}
+  utter=new SpeechSynthesisUtterance(text);
+  const v=voiceFor(who);if(v){utter.voice=v;utter.lang=v.lang;}else utter.lang='vi-VN';
+  utter.rate=Math.min(2,Math.max(.5,rate));utter.pitch=Math.min(2,Math.max(0,c.p||1));
+  utter.onend=fin;utter.onerror=fin;
+  speechSynthesis.speak(utter);
+  fallbackTimer=setTimeout(fin,4000+text.length*120/rate);
+}
+// chain several lines: [[who,text],...]
+function speakChain(lines,i=0){if(i>=lines.length)return;speak(lines[i][1],()=>setTimeout(()=>speakChain(lines,i+1),350),true,lines[i][0]);}
+function renderVoiceView(){
+  const grid=document.getElementById('vGrid');if(!grid)return;
+  const nVi=voices.filter(isVi).length;
+  document.getElementById('vInfo').innerHTML=`<b>🎙️ Chọn giọng nói cho từng nhân vật trong hội thoại.</b> Máy tìm thấy <b>${voices.length}</b> giọng, trong đó <b>${nVi}</b> giọng tiếng Việt.<br>`+
+   (nVi<2?`💡 ${nVi?'Máy chỉ có 1 giọng tiếng Việt':'Máy chưa có giọng tiếng Việt'}: phần mềm dùng <b>cao độ</b> khác nhau để phân biệt cô giáo và các bạn nhỏ. Để có thêm giọng tự nhiên (<i>HoaiMy</i> – nữ, <i>NamMinh</i> – nam), hãy mở phần mềm bằng <b>Microsoft Edge</b> khi có mạng Internet (file .exe tự động dùng Edge).`
+   :`✅ Có nhiều giọng tiếng Việt – mỗi nhân vật có thể dùng một giọng riêng.`);
+  const opts=voices.map(v=>`<option value="${v.voiceURI.replace(/"/g,'&quot;')}">${isVi(v)?'🇻🇳 ':''}${v.name} (${v.lang})${v.localService?'':' · online'}</option>`).join('');
+  grid.innerHTML=Object.keys(ROLES).map(k=>{const R=ROLES[k],c=(vset&&vset[k])||{p:R.dPitch,r:R.dRate};
+    const av=k==='co'?document.getElementById('teacherSvg').outerHTML.replace('id="teacherSvg"',''):KID_SVG[k].split('</svg>')[0]+'</svg>';
+    return `<div class="vcard" style="--c:${R.color}" data-k="${k}"><div class="hd">${av}<div><b>${R.name}</b><div style="font-size:13px;color:var(--muted)">${R.desc}</div></div></div>
+    <label>Giọng đọc</label><select class="vs">${opts||'<option>(không có giọng)</option>'}</select>
+    <label>Cao độ: <span class="pv">${(+c.p).toFixed(2)}</span></label><input type="range" class="vp" min="0.5" max="2" step="0.05" value="${c.p}">
+    <label>Tốc độ: <span class="rv">${(+c.r).toFixed(2)}</span></label><input type="range" class="vr" min="0.6" max="1.6" step="0.05" value="${c.r}">
+    <div class="row"><button class="btn" style="background:${R.color};box-shadow:none">🔊 Nghe thử</button></div></div>`;}).join('');
+  grid.querySelectorAll('.vcard').forEach(card=>{
+    const k=card.dataset.k,sel=card.querySelector('.vs');
+    if(vset&&vset[k]&&vset[k].v)sel.value=vset[k].v;
+    const save=()=>{vset=vset||{};vset[k]={v:sel.value,p:+card.querySelector('.vp').value,r:+card.querySelector('.vr').value};
+      card.querySelector('.pv').textContent=vset[k].p.toFixed(2);card.querySelector('.rv').textContent=vset[k].r.toFixed(2);store.set('voices',vset);};
+    sel.onchange=save;card.querySelector('.vp').oninput=save;card.querySelector('.vr').oninput=save;
+    card.querySelector('button').onclick=()=>{save();speak(k==='co'?'Chào các em, cô là cô Mai. Hôm nay chúng ta học Finger Math nhé!':k==='bin'?'Chào cô ạ! Con là Bin, con thích tính nhẩm lắm!':'Chào cô ạ! Con là Na, con sẽ cố gắng học thật giỏi!',null,true,k);};
+  });
+}
+document.getElementById('bDemo').onclick=()=>speakChain([
+ ['co','Các em ơi, ba cộng bốn bằng mấy?'],
+ ['bin','Thưa cô, ba cộng bốn bằng bảy ạ!'],
+ ['na','Con tính bằng ngón tay: giơ ngón cái, rồi co một ngón, ra bảy!'],
+ ['co','Cả hai em đều giỏi lắm!']]);
+document.getElementById('bVStop').onclick=stopSpeak;
+document.getElementById('bVReset').onclick=()=>{defaultVoices();renderVoiceView();};
+
+/* ================= SOUND FX ================= */
+let actx=null;
+function beep(ok){try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();
+  const notes=ok?[660,880,1100]:[300,220];
+  notes.forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.type=ok?'triangle':'sawtooth';o.frequency.value=f;
+    g.gain.setValueAtTime(.0001,actx.currentTime+i*.11);g.gain.exponentialRampToValueAtTime(.18,actx.currentTime+i*.11+.02);
+    g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+i*.11+.2);o.connect(g).connect(actx.destination);o.start(actx.currentTime+i*.11);o.stop(actx.currentTime+i*.11+.25);});
+}catch(e){}}
+function stars(el){const r=el.getBoundingClientRect();for(let i=0;i<8;i++){const s=document.createElement('div');s.className='star';s.textContent=['⭐','🌟','✨'][i%3];
+  s.style.left=(r.left+r.width/2+window.scrollX)+'px';s.style.top=(r.top+window.scrollY+80)+'px';s.style.position='absolute';s.style.setProperty('--dx',(Math.random()*300-150)+'px');
+  document.body.appendChild(s);setTimeout(()=>s.remove(),1300);}}
+
+/* ================= LESSON PLAYER ================= */
+document.getElementById('hL').innerHTML=handSVG('L','svgL');
+document.getElementById('hR').innerHTML=handSVG('R','svgR');
+let cur=0,step=0,playing=false;
+function renderList(){
+  document.getElementById('lesList').innerHTML=LESSONS.map((l,i)=>`<div class="les${i===cur?' on':''}" data-i="${i}"><div class="ic">${l.ic}</div><div class="tt">${l.t}</div>${done[i]?'<div class="ck">✔</div>':''}</div>`).join('');
+  document.querySelectorAll('.les').forEach(d=>d.onclick=()=>{openLesson(+d.dataset.i);});
+}
+function openLesson(i){stopSpeak();setPlay(false);cur=i;step=0;renderList();document.getElementById('lesTitle').textContent=LESSONS[i].ic+' '+LESSONS[i].t;showStep(false);}
+function showStep(say){
+  const L=LESSONS[cur],s=L.steps[step],mode=L.mode||'cs';
+  const la=toArr(s[1]),ra=toArr(s[2]);
+  let labs=LAB_CS,always=false,capL='TAY TRÁI · hàng chục',capR='TAY PHẢI · hàng đơn vị',vl='',vr='';
+  if(mode==='nine'){labs=LAB_9;always=true;capL='TAY TRÁI';capR='TAY PHẢI';}
+  else if(mode==='mul'){labs=LAB_MUL;always=true;capL='TAY TRÁI';capR='TAY PHẢI';vl='Giơ: '+la.filter(Boolean).length;vr='Giơ: '+ra.filter(Boolean).length;}
+  else{vl=arrDigit(la)*10;vr=arrDigit(ra);}
+  setHand('svgL',la,labs.L,always);setHand('svgR',ra,labs.R,always);
+  document.querySelector('#boxL .cap').textContent=capL;document.querySelector('#boxR .cap').textContent=capR;
+  document.getElementById('vL').textContent=vl;document.getElementById('vR').textContent=vr;
+  document.getElementById('vL').style.color='var(--red)';document.getElementById('vR').style.color='var(--blue)';
+  const eq=document.getElementById('eq');eq.textContent=s[3];eq.classList.remove('pop');void eq.offsetWidth;eq.classList.add('pop');
+  document.getElementById('sub').textContent=s[4]||'';
+  let txt=s[0],who='co';const m=txt.match(/^@(bin|na)\s+/);if(m){who=m[1];txt=txt.slice(m[0].length);}
+  const bub=document.getElementById('bubble');bub.className='bubble '+who;
+  bub.innerHTML=`<b class="who" style="color:${ROLES[who].color}">${ROLES[who].name}:</b>`;bub.appendChild(document.createTextNode(txt));
+  document.querySelectorAll('.actor').forEach(a=>a.classList.toggle('speak',a.id==='act_'+who));
+  document.getElementById('boxL').classList.toggle('hl',s[5]==='L');document.getElementById('boxR').classList.toggle('hl',s[5]==='R');
+  document.getElementById('progBar').style.width=((step+1)/L.steps.length*100)+'%';
+  document.getElementById('stepN').textContent=`Bước ${step+1} / ${L.steps.length}`;
+  if(step===L.steps.length-1&&!done[cur]){done[cur]=1;store.set('done',done);renderList();}
+  if(say)speak(txt,afterSpeak,undefined,who);
+}
+function afterSpeak(){
+  if(!playing)return;
+  if(!document.getElementById('optAuto').checked){setPlay(false);return;}
+  if(step<LESSONS[cur].steps.length-1){setTimeout(()=>{if(playing){step++;showStep(true);}},700);}
+  else{setPlay(false);stars(document.getElementById('eq'));beep(true);}
+}
+function setPlay(p){playing=p;document.getElementById('bPlay').textContent=p?'⏸ Dừng':'▶ Phát';}
+function togglePlay(){if(playing){setPlay(false);stopSpeak();}else{if(step>=LESSONS[cur].steps.length-1&&done[cur]&&!playing&&lastEnded)step=0;setPlay(true);showStep(true);}}
+let lastEnded=false;
+function go(d){const n=step+d;if(n<0||n>=LESSONS[cur].steps.length)return;step=n;showStep(true);if(!playing){/* speak once only */}}
+document.getElementById('bPlay').onclick=togglePlay;
+document.getElementById('bNext').onclick=()=>go(1);
+document.getElementById('bPrev').onclick=()=>go(-1);
+document.getElementById('bFirst').onclick=()=>{step=0;showStep(playing);};
+document.getElementById('bRep').onclick=()=>showStep(true);
+document.getElementById('optSound').onchange=()=>{if(!document.getElementById('optSound').checked)stopSpeak();};
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('vLessons').classList.contains('on')||e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
+  if(e.code==='Space'){e.preventDefault();togglePlay();}
+  if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1);
+});
+
+/* ================= NAV ================= */
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===b.dataset.v));
+  stopSpeak();setPlay(false);
+  if(b.dataset.v==='vPractice')newQ();
+  if(b.dataset.v==='vVoice')renderVoiceView();
+});
+
+/* ================= PRACTICE ================= */
+document.getElementById('pL').innerHTML=handSVG('L','pSvgL',true);
+document.getElementById('pR').innerHTML=handSVG('R','pSvgR',true);
+let pmode='build',score=0,streak=0,total=store.get('total',0),ans=null,answered=false,pClick=true;
+const $=id=>document.getElementById(id);
+$('tot').textContent=total;
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+function maxN(){return [0,9,50,99][+$('lvl').value];}
+function pLabels(){return pmode==='mul9'?LAB_9:LAB_CS;}
+function pAlways(){return pmode==='mul9'||$('showVal').checked;}
+function pSet(la,ra){const lb=pLabels();setHand('pSvgL',la,lb.L,pAlways());setHand('pSvgR',ra,lb.R,pAlways());pVals();}
+function pVals(){
+  if(pmode==='mul9'||pmode==='read'){$('pvL').textContent='';$('pvR').textContent='';return;}
+  const show=$('showVal').checked;
+  $('pvL').textContent=show?arrDigit(readHand('pSvgL'))*10:'';$('pvR').textContent=show?arrDigit(readHand('pSvgR')):'';
+  $('pvL').style.color='var(--red)';$('pvR').style.color='var(--blue)';
+}
+['pSvgL','pSvgR'].forEach(id=>{
+  $(id).addEventListener('click',e=>{
+    if(!pClick)return;const g=e.target.closest('.fg');if(!g)return;
+    const a=readHand(id);a[+g.dataset.i]=!a[+g.dataset.i];
+    const lb=pLabels();setHand(id,a,id==='pSvgL'?lb.L:lb.R,pAlways());pVals();
+  });
+});
+$('showVal').onchange=()=>{const lb=pLabels();setHand('pSvgL',readHand('pSvgL'),lb.L,pAlways());setHand('pSvgR',readHand('pSvgR'),lb.R,pAlways());pVals();};
+$('lvl').onchange=newQ;
+document.querySelectorAll('.ptabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.ptabs button').forEach(x=>x.classList.toggle('on',x===b));pmode=b.dataset.p;newQ();});
+function setCaps(){
+  if(pmode==='mul9'){$('pcapL').textContent='TAY TRÁI (ngón 1–5)';$('pcapR').textContent='TAY PHẢI (ngón 6–10)';}
+  else{$('pcapL').textContent='TAY TRÁI · hàng chục';$('pcapR').textContent='TAY PHẢI · hàng đơn vị';}
+  $('pLevel').style.display=pmode==='mul9'?'none':'flex';
+}
+function btn(txt,cls,fn){const b=document.createElement('button');b.className='btn '+(cls||'');b.textContent=txt;b.onclick=fn;$('pbtns').appendChild(b);return b;}
+function newQ(){
+  answered=false;$('pfb').textContent='';$('pfb').className='fb';$('pch').innerHTML='';$('pinput').innerHTML='';$('pbtns').innerHTML='';$('psub').textContent='';
+  setCaps();const M=maxN();
+  if(pmode==='build'){
+    pClick=true;ans=rnd(M>9?1:0,M);pSet(digitArr(0),digitArr(0));
+    $('pq').textContent='Bày số: '+ans;$('psub').textContent='Bấm vào ngón tay để giơ lên / co xuống';
+    btn('✔ Kiểm tra','green',()=>{const v=arrDigit(readHand('pSvgL'))*10+arrDigit(readHand('pSvgR'));judge(v===ans,v===ans?'':'Tay em đang bày số '+v);});
+    btn('↺ Co hết','ghost',()=>pSet(digitArr(0),digitArr(0)));
+    btn('Câu khác ➜','blue',newQ);
+    speak('Em hãy bày số '+ans+' bằng hai bàn tay.',null);
+  }
+  if(pmode==='read'){
+    pClick=false;ans=rnd(M>9?1:0,M);pSet(digitArr(Math.floor(ans/10)),digitArr(ans%10));
+    $('pq').textContent='Hai bàn tay đang chỉ số mấy?';
+    const set=new Set([ans]);while(set.size<4){let c=ans+rnd(-12,12);if(Math.random()<.3)c=(ans%10)*10+Math.floor(ans/10);if(c>=0&&c<=99)set.add(c);}
+    [...set].sort(()=>Math.random()-.5).forEach(c=>{const b=document.createElement('button');b.textContent=c;b.onclick=()=>{if(answered)return;
+      b.classList.add(c===ans?'ok':'no');if(c!==ans)[...$('pch').children].find(x=>+x.textContent===ans).classList.add('ok');judge(c===ans,'Đáp án đúng là '+ans);};$('pch').appendChild(b);});
+    btn('Câu khác ➜','blue',newQ);
+  }
+  if(pmode==='calc'){
+    pClick=true;let a,b,op;
+    for(let k=0;k<200;k++){op=Math.random()<.5?'+':'−';
+      if(M===9){a=rnd(0,9);b=rnd(1,9);}else{a=rnd(1,M);b=rnd(1,M>50?40:20);}
+      const r=op==='+'?a+b:a-b;if(r>=0&&r<=Math.max(M,9)&&r<=99){ans=r;break;}}
+    pSet(digitArr(Math.floor(a/10)),digitArr(a%10));
+    $('pq').textContent=`${a} ${op} ${b} = ?`;$('psub').textContent='Tay đã bày sẵn số '+a+'. Em dùng ngón tay để tính rồi nhập kết quả.';
+    const inp=document.createElement('input');inp.className='ans';inp.type='number';inp.id='ansIn';$('pinput').appendChild(inp);
+    const chk=()=>{if(answered)return;const v=parseInt(inp.value);if(isNaN(v))return;judge(v===ans,'Đáp án đúng là '+ans);};
+    inp.onkeydown=e=>{if(e.key==='Enter'){answered?newQ():chk();}};
+    btn('✔ Kiểm tra','green',chk);
+    btn('💡 Gợi ý','ghost',()=>{pSet(digitArr(Math.floor(ans/10)),digitArr(ans%10));$('psub').textContent='Bàn tay đã chuyển sang kết quả – em đọc số nhé!';});
+    btn('Câu khác ➜','blue',newQ);
+    setTimeout(()=>inp.focus(),50);
+    speak(`${a} ${op==='+'?'cộng':'trừ'} ${b} bằng bao nhiêu?`,null);
+  }
+  if(pmode==='mul9'){
+    pClick=false;const n=rnd(1,10);ans=9*n;const h=nine(n);
+    $('pq').textContent=`9 × ${n} = ?`;$('psub').textContent='Bấm vào ngón tay số '+n+' để co xuống, rồi đọc kết quả';
+    pSet(ALL,ALL);pClick=true;
+    const inp=document.createElement('input');inp.className='ans';inp.type='number';$('pinput').appendChild(inp);
+    const chk=()=>{if(answered)return;const v=parseInt(inp.value);if(isNaN(v))return;pSet(h.L,h.R);judge(v===ans,`Co ngón số ${n}: ${n-1} ngón bên trái, ${10-n} ngón bên phải → ${ans}`);};
+    inp.onkeydown=e=>{if(e.key==='Enter'){answered?newQ():chk();}};
+    btn('✔ Kiểm tra','green',chk);btn('Câu khác ➜','blue',newQ);
+    speak(`Chín nhân ${n} bằng bao nhiêu?`,null);
+  }
+}
+function judge(ok,msg){
+  if(answered&&pmode!=='build')return;
+  if(ok){answered=true;streak++;const pts=10+(streak>=3?5:0);score+=pts;total+=pts;store.set('total',total);
+    $('pfb').textContent=['🎉 Đúng rồi! Giỏi quá!','👏 Chính xác!','🌟 Tuyệt vời!'][rnd(0,2)]+(streak>=3?` (chuỗi ${streak} – thưởng +5)`:'');$('pfb').className='fb ok';
+    beep(true);stars($('pq'));speak('Đúng rồi! Giỏi quá!',null);
+    if(pmode==='build')setTimeout(()=>{if(pmode==='build')newQ();},1600);
+  }else{if(pmode!=='build')answered=true;streak=0;$('pfb').textContent='😅 Chưa đúng. '+msg;$('pfb').className='fb no';beep(false);speak('Chưa đúng rồi, em thử lại nhé.',null);}
+  $('sc').textContent=score;$('st').textContent=streak;$('tot').textContent=total;
+}
+
+/* ================= START ================= */
+renderList();openLesson(0);
+</script>
+</body>
+</html>
